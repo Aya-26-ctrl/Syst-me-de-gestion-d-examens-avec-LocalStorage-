@@ -6,6 +6,7 @@
   </head>
   <body>
     <h1>Créer un nouvel examen</h1>
+
     <form id="form-examen">
       <input
         type="text"
@@ -19,19 +20,28 @@
         placeholder="Durée (minutes)"
         required
       /><br />
-      <textarea id="description" placeholder="Description"></textarea><br />
+      <textarea
+        id="description"
+        placeholder="Description de l'examen"
+      ></textarea
+      ><br />
       <input
         type="text"
         id="proprietaire"
         placeholder="Nom du propriétaire"
         required
       /><br />
+      <input
+        type="email"
+        id="email"
+        placeholder="Email du propriétaire"
+        required
+      /><br />
       <button type="submit">Ajouter l'examen</button>
     </form>
+
+    <div id="liste-examens"></div>
 
     <script src="script.js"></script>
   </body>
 </html>
-TO DO 2 : Écrire le script pour enregistrer l'examen dans le localStorage Créez
-un fichier script.js et ajoutez le code suivant pour gérer le formulaire et
-enregistre
