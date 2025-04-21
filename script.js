@@ -1,62 +1,26 @@
+// TODO : Ajouter un écouteur d'événement sur le formulaire
 document.getElementById('form-examen').addEventListener('submit', function(e) {
-    e.preventDefault();
-  
-    // Récupération des données du formulaire
-    const nomExamen = document.getElementById('nom').value;
-    const duree = parseInt(document.getElementById('duree').value);
-    const description = document.getElementById('description').value;
-    const proprietaire = document.getElementById('proprietaire').value;
-    const email = document.getElementById('email').value.toLowerCase(); // email unique
-  
-    if (!email) {
-      alert("L'email est requis !");
-      return;
-    }
-  
-    const examen = {
-      nom: nomExamen,
-      duree: duree,
-      description: description,
-      proprietaire: proprietaire,
-      email: email,
+  e.preventDefault();
+
+  // TODO : Récupérer les valeurs du formulaire
+  const examen = {
+      nom: document.getElementById('nom').value,
+      duree: parseInt(document.getElementById('duree').value),
+      description: document.getElementById('description').value,
+      proprietaire: document.getElementById('proprietaire').value,
       questions: []
-    };
-  
-    // Clé basée sur l'email
-    const examsKey = 'examens_' + email;
-    const exams = JSON.parse(localStorage.getItem(examsKey)) || [];
-  
-    exams.push(examen);
-    localStorage.setItem(examsKey, JSON.stringify(exams));
-  
-    alert('Examen ajouté avec succès !');
-    this.reset();
-  
-    afficherExamens(email); // Affiche les examens du propriétaire juste après ajout
-  });
-  
-  // Affichage des examens d’un utilisateur (basé sur son email)
-  function afficherExamens(email) {
-    const examsKey = 'examens_' + email;
-    const exams = JSON.parse(localStorage.getItem(examsKey)) || [];
-  
-    const container = document.getElementById('liste-examens');
-    container.innerHTML = `<h2>Liste des examens de ${email}</h2>`;
-  
-    if (exams.length === 0) {
-      container.innerHTML += `<p>Aucun examen trouvé.</p>`;
-      return;
-    }
-  
-    exams.forEach((exam, index) => {
-      const div = document.createElement('div');
-      div.innerHTML = `
-        <h3>Examen ${index + 1} : ${exam.nom}</h3>
-        <p><strong>Durée :</strong> ${exam.duree} min</p>
-        <p><strong>Description :</strong> ${exam.description}</p>
-        <hr/>
-      `;
-      container.appendChild(div);
-    });
-  }
-  
+  };
+
+  // TODO : Créer une clé unique pour chaque utilisateur, en utilisant un identifiant unique pour éviter les conflits de noms
+  // Utilisation d'un identifiant unique pour chaque utilisateur, généré par exemple à partir de leur nom + un timestamp
+  const uniqueOwnerKey = examen.proprietaire.trim().toLowerCase() + "_" + Date.now();
+
+  // TODO : Sauvegarder l'examen dans le localStorage sous une clé unique basée sur le nom du propriétaire
+  const examsKey = 'examens_' + uniqueOwnerKey;
+  const exams = JSON.parse(localStorage.getItem(examsKey)) || [];
+  exams.push(examen);
+  localStorage.setItem(examsKey, JSON.stringify(exams));
+
+  alert('Examen ajouté avec succès !');
+  this.reset();
+});
